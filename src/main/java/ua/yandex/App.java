@@ -1,16 +1,10 @@
 package ua.yandex;
 
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.List;
-import java.util.Properties;
 import ua.yandex.dao.ConnectionFactory;
 import ua.yandex.dao.DriverManagerDAOJDBCFactory;
-import ua.yandex.dao.GroupDAO;
-import ua.yandex.dao.GroupDAOJDBC;
 import ua.yandex.dao.StudentDAO;
 import ua.yandex.dao.StudentDAOJDBC;
-import ua.yandex.model.Group;
 import ua.yandex.model.Student;
 
 /**
