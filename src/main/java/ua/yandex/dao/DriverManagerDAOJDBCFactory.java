@@ -34,6 +34,9 @@ public class DriverManagerDAOJDBCFactory implements ConnectionFactory{
     private String user;
     private String pass;
 
+    public DriverManagerDAOJDBCFactory() {
+    }
+    
     public DriverManagerDAOJDBCFactory(String driver, String url, String user, String pass) {
         this.driver = driver;
         this.url = url;

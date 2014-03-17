@@ -1,6 +1,8 @@
 package ua.yandex;
 
 import java.util.List;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ua.yandex.dao.ConnectionFactory;
 import ua.yandex.dao.DriverManagerDAOJDBCFactory;
 import ua.yandex.dao.StudentDAO;
@@ -25,19 +27,12 @@ public class App {
 //            ex.printStackTrace();
 //        }
 //    }
-    
     public static void main(String[] args) {
         System.out.println("Hello World!");
-
-        String driver = "com.mysql.jdbc.Driver"; // prop.getProperty("javabase.jdbc.driver");
-        String url = "jdbc:mysql://localhost:3306/socnet"; // prop.getProperty("javabase.jdbc.url");
-        String user = "root"; //prop.getProperty("javabase.jdbc.username");
-        String pass = "root"; // prop.getProperty("javabase.jdbc.password");
-
-        ConnectionFactory daoFactory = 
-                new DriverManagerDAOJDBCFactory(driver, url, user, pass);
+      
+        ApplicationContext appCtx = new ClassPathXmlApplicationContext("SpringXMLConfig.xml");
         
-        StudentDAO studentDAO = new StudentDAOJDBC(daoFactory);
+        StudentDAO studentDAO = appCtx.getBean("studentDAO", StudentDAO.class);
         List<Student> students = studentDAO.findAll();
         for (Student student : students) {
             System.out.println(student);
