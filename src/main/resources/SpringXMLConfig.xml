@@ -13,10 +13,10 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
        p:location="jdbc.properties" />
     
     <bean name="driverManagerDAOFac" class="ua.yandex.dao.DriverManagerDAOJDBCFactory" 
-        p:driver="com.mysql.jdbc.Driver"
-        p:url="jdbc:mysql://localhost:3306/socnet"
-        p:user="root"
-        p:pass="root"        
+        p:driver="${driver}"
+        p:url="${url}"
+        p:user="${user}"
+        p:pass="${password}"        
     /> 
     
     <bean name="studentDAO" class="ua.yandex.dao.StudentDAOJDBC">
