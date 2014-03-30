@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ua.yandex.dao;
 
 import java.sql.Connection;
@@ -13,22 +9,26 @@ import java.util.List;
 import ua.yandex.model.Student;
 
 import static ua.yandex.dao.DAOJDBCUtil.*;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-/**
- *
- * @author Amdrii
- */
+@Repository("studentDAO")
 public class StudentDAOJDBC implements StudentDAO {
 
+    @Autowired
     private ConnectionFactory cnnFactory;
 
+    public StudentDAOJDBC() {
+    }
+       
     public StudentDAOJDBC(ConnectionFactory cnnFactory) {
         this.cnnFactory = cnnFactory;
     }
 
+    public void setCnnFactory(ConnectionFactory cnnFactory) {
+        this.cnnFactory = cnnFactory;
+    } 
+    
     @Override
     public Student find(Integer id) {
         Connection connection = null;
@@ -109,24 +109,19 @@ public class StudentDAOJDBC implements StudentDAO {
     }
 
     @Override
-    public Student getByName(String studentName) {
+    public Student findByName(String studentName) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        Statement statement = null;
         ResultSet resultSet = null;
         Student student = null;
 
         try {
             connection = cnnFactory.getConnection();
             preparedStatement = connection.
-                    prepareStatement("select * from Student where studentname = ?");
+                    prepareStatement("select * from Student where name = ?");
             preparedStatement.setString(1, studentName);
-            //resultSet = preparedStatement.executeQuery();
-            statement = connection.createStatement();
-            String sql = "select * from Student where studentname = '" + studentName + "'";
-            System.out.println(sql);
-            resultSet = statement.executeQuery(sql);
-            
+            resultSet = preparedStatement.executeQuery();
+                      
             if(resultSet.next()) {
                 student = map(resultSet);
             }

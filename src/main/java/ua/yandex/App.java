@@ -30,13 +30,17 @@ public class App {
     public static void main(String[] args) {
         System.out.println("Hello World!");
       
-        ApplicationContext appCtx = new ClassPathXmlApplicationContext("SpringXMLConfig.xml");
+        ApplicationContext appCtx = 
+                new ClassPathXmlApplicationContext("persistenceContext.xml");
         
         StudentDAO studentDAO = appCtx.getBean("studentDAO", StudentDAO.class);
         List<Student> students = studentDAO.findAll();
         for (Student student : students) {
             System.out.println(student);
         }
+        
+        Student stud = studentDAO.findByName("Andrii");
+        System.out.println(stud);
 
     }
 }

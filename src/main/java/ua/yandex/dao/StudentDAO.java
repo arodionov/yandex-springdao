@@ -16,7 +16,7 @@ public interface StudentDAO {
     Student find(Integer id);
     List<Student> findAll();
     boolean create(Student student);
-    Student getByName(String studentName);
+    Student findByName(String studentName);
     //boolean upadate(Student student);
     //List<Student> findAllInGroup(Integer groupID);
     //List<Student> findAllInGroup(Group group);

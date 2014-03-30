@@ -8,19 +8,17 @@
 http://www.springframework.org/schema/beans/spring-beans.xsd
 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
    
+    <context:component-scan base-package="*"/>
+    
     <bean id="propertyConfigurer"
-       class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
-       p:location="jdbc.properties" />
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+          p:location="jdbc.properties" />
     
     <bean name="driverManagerDAOFac" class="ua.yandex.dao.DriverManagerDAOJDBCFactory" 
-        p:driver="${driver}"
-        p:url="${url}"
-        p:user="${user}"
-        p:pass="${password}"        
+          p:driver="${driver}"
+          p:url="${url}"
+          p:user="${user}"
+          p:pass="${password}"        
     /> 
-    
-    <bean name="studentDAO" class="ua.yandex.dao.StudentDAOJDBC">
-        <constructor-arg ref="driverManagerDAOFac"/>
-    </bean>
 
 </beans>
