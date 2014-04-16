@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ua.yandex.model;
+package ua.yandex.shad.socnet.domain.group;
 
+import ua.yandex.shad.socnet.domain.student.Student;
 import java.util.List;
 
 /**

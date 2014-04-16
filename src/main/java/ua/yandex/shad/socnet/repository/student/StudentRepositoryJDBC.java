@@ -1,4 +1,4 @@
-package ua.yandex.dao;
+package ua.yandex.shad.socnet.repository.student;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,28 +6,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import ua.yandex.model.Student;
-
-import static ua.yandex.dao.DAOJDBCUtil.*;
+import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import ua.yandex.shad.socnet.domain.student.Student;
+import static ua.yandex.shad.socnet.repository.jdbc.DAOJDBCUtil.*;
 
-@Repository("studentDAO")
-public class StudentDAOJDBC implements StudentDAO {
+@Repository("studentRepository")
+public class StudentRepositoryJDBC implements StudentRepository {
 
     @Autowired
-    private ConnectionFactory cnnFactory;
+    private DataSource ds;
 
-    public StudentDAOJDBC() {
-    }
-       
-    public StudentDAOJDBC(ConnectionFactory cnnFactory) {
-        this.cnnFactory = cnnFactory;
+    public StudentRepositoryJDBC() {
     }
 
-    public void setCnnFactory(ConnectionFactory cnnFactory) {
-        this.cnnFactory = cnnFactory;
-    } 
+    public StudentRepositoryJDBC(DataSource ds) {
+        this.ds = ds;
+    }
     
     @Override
     public Student find(Integer id) {
@@ -37,7 +33,7 @@ public class StudentDAOJDBC implements StudentDAO {
         Student student = null;
 
         try {
-            connection = cnnFactory.getConnection();
+            connection = ds.getConnection();
             preparedStatement = connection.prepareStatement("select * from Student where id=?");
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
@@ -63,7 +59,7 @@ public class StudentDAOJDBC implements StudentDAO {
         List<Student> students = new ArrayList<Student>();
 
         try {
-            connection = cnnFactory.getConnection();
+            connection = ds.getConnection();
             preparedStatement = connection.prepareStatement("select * from Student");
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -85,7 +81,7 @@ public class StudentDAOJDBC implements StudentDAO {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
-            connection = cnnFactory.getConnection();
+            connection = ds.getConnection();
             preparedStatement = connection.prepareStatement("INSERT INTO Student "
                     + "(name, year) VALUES (?, ?)");
             preparedStatement.setString(1, student.getStudentName());
@@ -116,7 +112,7 @@ public class StudentDAOJDBC implements StudentDAO {
         Student student = null;
 
         try {
-            connection = cnnFactory.getConnection();
+            connection = ds.getConnection();
             preparedStatement = connection.
                     prepareStatement("select * from Student where name = ?");
             preparedStatement.setString(1, studentName);

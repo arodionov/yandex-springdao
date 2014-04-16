@@ -1,25 +1,28 @@
+package ua.yandex.shad.socnet.repository.group;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
-package ua.yandex.dao;
+
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
-import static ua.yandex.dao.DAOJDBCUtil.close;
-import ua.yandex.model.Group;
-import ua.yandex.model.Student;
+import javax.sql.DataSource;
+import ua.yandex.shad.socnet.domain.group.Group;
+import ua.yandex.shad.socnet.domain.student.Student;
+import static ua.yandex.shad.socnet.repository.jdbc.DAOJDBCUtil.*;
 
 /**
  *
  * @author andrii
  */
-public class GroupDAOJDBC implements GroupDAO{
-    private ConnectionFactory cnnFactory;
+public class GroupRepositoryJDBC implements GroupRepository{
+    private DataSource ds;
 
     public Group find(Integer id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -37,7 +40,7 @@ public class GroupDAOJDBC implements GroupDAO{
        Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
-            connection = cnnFactory.getConnection();
+            connection = ds.getConnection();
             preparedStatement = connection.prepareStatement("INSERT INTO Student "
                     + "(name, year) VALUES (?, ?)");
             preparedStatement.setString(1, student.getStudentName());

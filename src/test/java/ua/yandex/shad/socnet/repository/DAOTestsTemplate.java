@@ -1,4 +1,4 @@
-package ua.yandex.dao;
+package ua.yandex.shad.socnet.repository;
 
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -8,17 +8,29 @@
 http://www.springframework.org/schema/beans/spring-beans.xsd
 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
    
-    <context:component-scan base-package="*"/>
+    <!--<context:component-scan base-package="ua.yandex.shad.socnet.repository.*"/>-->
+    
+    <bean name="studentRepository" class="ua.yandex.shad.socnet.repository.student.StudentRepositoryJDBC">
+        <constructor-arg ref="mainDataSource"/>       
+    </bean>
     
     <bean id="propertyConfigurer"
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
           p:location="jdbc.properties" />
     
-    <bean name="driverManagerDAOFac" class="ua.yandex.dao.DriverManagerDAOJDBCFactory" 
-          p:driver="${driver}"
-          p:url="${url}"
-          p:user="${user}"
-          p:pass="${password}"        
-    /> 
+    <bean id="mainDataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
+        <property name="driverClass" value="${driver}" />
+        <property name="jdbcUrl" value="${url}" />
+        <property name="username" value="${user}"/>
+        <property name="password" value="${password}"/>
+        <property name="idleConnectionTestPeriodInMinutes" value="60"/>
+        <property name="idleMaxAgeInMinutes" value="240"/>
+        <property name="maxConnectionsPerPartition" value="30"/>
+        <property name="minConnectionsPerPartition" value="10"/>
+        <property name="partitionCount" value="3"/>
+        <property name="acquireIncrement" value="5"/>
+        <property name="statementsCacheSize" value="100"/>
+        <property name="releaseHelperThreads" value="3"/>
+    </bean>
 
 </beans>
