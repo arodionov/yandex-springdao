@@ -8,14 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ua.yandex.shad.socnet.domain.student.Student;
 import ua.yandex.shad.socnet.repository.DAOTestsTemplate;
 
-
-
 public class StudentDAOJDBCTest extends DAOTestsTemplate{
     
     @Autowired
     private StudentRepository studentRepository;
-    
-    
+        
     @Before
     public void clearDB(){
         jdbcTemplate.execute("TRUNCATE TABLE Student");

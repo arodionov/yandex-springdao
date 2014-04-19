@@ -1,18 +1,12 @@
 package ua.yandex.shad.socnet.repository.group;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 import javax.sql.DataSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import ua.yandex.shad.socnet.domain.group.Group;
 import ua.yandex.shad.socnet.domain.student.Student;
 import static ua.yandex.shad.socnet.repository.jdbc.DAOJDBCUtil.*;
@@ -21,8 +15,15 @@ import static ua.yandex.shad.socnet.repository.jdbc.DAOJDBCUtil.*;
  *
  * @author andrii
  */
-public class GroupRepositoryJDBC implements GroupRepository{
+@Repository("groupRepository")
+public class GroupRepositoryJDBC implements GroupRepository {
+
     private DataSource ds;
+
+    @Autowired
+    public GroupRepositoryJDBC(DataSource ds) {
+        this.ds = ds;
+    }
 
     public Group find(Integer id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -33,18 +34,13 @@ public class GroupRepositoryJDBC implements GroupRepository{
     }
 
     public boolean create(Group group) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public boolean addStudentToGroup(Group group, Student student) {
-       Connection connection = null;
+        Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
             connection = ds.getConnection();
-            preparedStatement = connection.prepareStatement("INSERT INTO Student "
-                    + "(name, year) VALUES (?, ?)");
-            preparedStatement.setString(1, student.getStudentName());
-            preparedStatement.setInt(2, student.getStudentYear());
+            preparedStatement = connection.prepareStatement("INSERT INTO Groups "
+                    + "(name) VALUES (?)");
+            preparedStatement.setString(1, group.getGroupName());
             return preparedStatement.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -54,5 +50,25 @@ public class GroupRepositoryJDBC implements GroupRepository{
         }
         return false;
     }
-    
+
+    @Override
+    public boolean addStudentToGroup(int groupID, int studentID) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement("INSERT INTO student_groups_junction "
+                    + "(student_id, group_id) VALUES (?, ?)");
+            preparedStatement.setInt(1, studentID);
+            preparedStatement.setInt(2, groupID);
+            return preparedStatement.execute();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            close(preparedStatement);
+            close(connection);
+        }
+        return false;
+    }
+
 }
