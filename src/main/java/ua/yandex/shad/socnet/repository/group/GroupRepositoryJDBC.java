@@ -8,7 +8,6 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ua.yandex.shad.socnet.domain.group.Group;
-import ua.yandex.shad.socnet.domain.student.Student;
 import static ua.yandex.shad.socnet.repository.jdbc.DAOJDBCUtil.*;
 
 /**
@@ -41,7 +40,8 @@ public class GroupRepositoryJDBC implements GroupRepository {
             preparedStatement = connection.prepareStatement("INSERT INTO Groups "
                     + "(name) VALUES (?)");
             preparedStatement.setString(1, group.getGroupName());
-            return preparedStatement.execute();
+            preparedStatement.execute();
+            return true;
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
@@ -61,7 +61,8 @@ public class GroupRepositoryJDBC implements GroupRepository {
                     + "(student_id, group_id) VALUES (?, ?)");
             preparedStatement.setInt(1, studentID);
             preparedStatement.setInt(2, groupID);
-            return preparedStatement.execute();
+             preparedStatement.execute();
+             return true;
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {

@@ -15,12 +15,9 @@ import static ua.yandex.shad.socnet.repository.jdbc.DAOJDBCUtil.*;
 @Repository("studentRepository")
 public class StudentRepositoryJDBC implements StudentRepository {
 
-    @Autowired
     private DataSource ds;
 
-    public StudentRepositoryJDBC() {
-    }
-
+    @Autowired
     public StudentRepositoryJDBC(DataSource ds) {
         this.ds = ds;
     }

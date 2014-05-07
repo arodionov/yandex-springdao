@@ -1,6 +1,7 @@
 package ua.yandex.shad.socnet.repository.group;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +34,13 @@ public class GroupRepositoryJDBCTest extends DAOTestsTemplate {
     public void testCreateNoExceptions() {        
         Group group = new Group();
         group.setGroupName("TestGroup");
-        groupRepository.create(group);
+        Assert.assertTrue(groupRepository.create(group));
     }
 
     @Test
     public void testAddStudentToGroupNoExceptions() {
         System.out.println("addStudentToGroup");
-        groupRepository.addStudentToGroup(1, 1);
+        Assert.assertTrue(groupRepository.addStudentToGroup(1, 1));
     }
 
 }
