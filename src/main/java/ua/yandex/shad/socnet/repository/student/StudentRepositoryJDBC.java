@@ -86,7 +86,8 @@ public class StudentRepositoryJDBC implements StudentRepository {
                     + "(name, year) VALUES (?, ?)");
             preparedStatement.setString(1, student.getStudentName());
             preparedStatement.setInt(2, student.getStudentYear());
-            return preparedStatement.execute();
+            preparedStatement.execute();
+            return true;
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {

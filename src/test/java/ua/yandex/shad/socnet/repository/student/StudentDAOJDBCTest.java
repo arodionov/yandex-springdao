@@ -21,7 +21,16 @@ public class StudentDAOJDBCTest extends DAOTestsTemplate{
     @Test
     public void testCreateStudentNoExceptions() {
         Student stud = new Student("ABC", 1);                
-        studentRepository.create(stud);
+        Assert.assertTrue(studentRepository.create(stud));
+    }
+    
+    @Test
+    public void testCreateStudentThrowAndCatchException() {        
+        Student stud = new Student("ABC", 1);              
+        jdbcTemplate.execute("ALTER TABLE Student ALTER COLUMN name RENAME TO somename");
+        
+        Assert.assertFalse(studentRepository.create(stud));
+        jdbcTemplate.execute("ALTER TABLE Student ALTER COLUMN somename RENAME TO name");
     }
     
     @Test
